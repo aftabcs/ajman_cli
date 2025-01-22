@@ -1,5 +1,5 @@
 name: ajmancli
-description: A sample command-line application.
+description: Internal code gen tool for Ajman bank project.
 homepage: https://github.com/saffer4u/ajman_cli
 repository: https://github.com/saffer4u/ajman_cli
 version: 1.0.0
