@@ -1,3 +1,4 @@
 enum CommandEnum {
   genpage,
+  addintl,
 }
