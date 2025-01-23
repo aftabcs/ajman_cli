@@ -17,6 +17,12 @@ void main(List<String> arguments) {
         OptionEnum.name.name,
         abbr: OptionEnum.name.name[0],
         help: 'Name of the page to generate',
+      )
+      ..addFlag(
+        FlagEnum.args.name, // Optional boolean flag
+        abbr: 'a', // Short abbreviation
+        defaultsTo: false, // Default value
+        help: 'Use to generate args',
       ),
   );
 
@@ -45,7 +51,7 @@ void main(List<String> arguments) {
   final argResults = parser.parse(arguments);
 
   if (argResults[FlagEnum.help.name] as bool || argResults.command == null) {
-    print('Usage: ajmancli ${CommandEnum.genpage.name} -n <PageName>');
+    print('Usage: ajmancli ${CommandEnum.genpage.name} -n <PageName> [-a <AddArgs>]');
     print('Usage: ajmancli ${CommandEnum.addintl.name} -v <Value String> [-a <ArabicString>]');
     print(parser.usage);
     exit(0);
@@ -53,11 +59,24 @@ void main(List<String> arguments) {
 
   if (argResults.command!.name == CommandEnum.genpage.name) {
     final name = argResults.command![OptionEnum.name.name] as String?;
-    if (name == null) {
-      print('Error: Page name is required.\nUsage: ajmancli ${CommandEnum.genpage.name} -n <PageName>');
+    final addArgs = argResults.command![FlagEnum.args.name] as bool;
+    // Check if name is null or empty
+    if (name == null || name.trim().isEmpty) {
+      print(
+          '\x1B[31mError: Page name is required.\nUsage: ajmancli ${CommandEnum.genpage.name} -n <PageName>\x1B[0m');
       exit(1);
     }
-    generatePage(name.replaceAll(" ", ""));
+
+    // Regular expression to validate the name (alphanumeric only, no spaces)
+    final invalidNamePattern = RegExp(r'[^a-zA-Z0-9]');
+    if (invalidNamePattern.hasMatch(name) || name.contains(' ')) {
+      print(
+          '\x1B[31mError: Page name can only contain alphanumeric characters (letters and numbers) and no spaces.\x1B[0m');
+      exit(1);
+    }
+
+    // If validation passes, call generatePage
+    generatePage(name, addArgs);
   } else if (argResults.command!.name == CommandEnum.addintl.name) {
     final value = argResults.command![OptionEnum.value.name] as String?;
     final arabic = argResults.command![OptionEnum.arabic.name] as String?;

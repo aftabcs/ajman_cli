@@ -1,3 +1,1 @@
-enum FlagEnum {
-  help,
-}
+enum FlagEnum { help, args }
