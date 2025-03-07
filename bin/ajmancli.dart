@@ -4,6 +4,7 @@ import 'package:ajmancli/constants/enums/command_enum.dart';
 import 'package:ajmancli/constants/enums/flag_enum.dart';
 import 'package:ajmancli/constants/enums/option_enum.dart';
 import 'package:ajmancli/gen_page/gen_page.dart';
+import 'package:ajmancli/utils/common_utils.dart';
 
 import 'package:args/args.dart';
 
@@ -13,11 +14,7 @@ void main(List<String> arguments) {
   parser.addCommand(
     CommandEnum.genpage.name,
     ArgParser()
-      ..addOption(
-        OptionEnum.name.name,
-        abbr: OptionEnum.name.name[0],
-        help: 'Name of the page to generate',
-      )
+      ..addOption(OptionEnum.name.name, abbr: OptionEnum.name.name[0], help: 'Name of the page to generate')
       ..addFlag(
         FlagEnum.args.name, // Optional boolean flag
         abbr: 'a', // Short abbreviation
@@ -45,25 +42,46 @@ void main(List<String> arguments) {
     FlagEnum.help.name,
     abbr: FlagEnum.help.name[0],
     negatable: false,
-    help: 'Show usage information',
+    help: 'View usage information',
   );
 
-  final argResults = parser.parse(arguments);
+  parser.addFlag(
+    FlagEnum.version.name,
+    abbr: FlagEnum.version.name[0],
+    negatable: false,
+    help: 'View current version',
+  );
 
-  if (argResults[FlagEnum.help.name] as bool || argResults.command == null) {
+  ArgResults? argResults;
+
+  try {
+    argResults = parser.parse(arguments);
+  } on FormatException catch (e) {
+    print('\x1B[31mError: ${e.message}\x1B[0m');
+    print('Use `ajman --help` to see available commands and options.');
+    exit(1);
+  }
+
+  if (argResults[FlagEnum.version.name] as bool) {
+    print('Ajman CLI version: ${CommonUtils.pubSpec()?.version}');
+    exit(0);
+  }
+
+  if (argResults[FlagEnum.help.name] as bool) {
     print('Usage: ajmancli ${CommandEnum.genpage.name} -n <PageName> [-a <AddArgs>]');
     print('Usage: ajmancli ${CommandEnum.addintl.name} -v <Value String> [-a <ArabicString>]');
     print(parser.usage);
     exit(0);
   }
 
-  if (argResults.command!.name == CommandEnum.genpage.name) {
+  if (argResults.command?.name == CommandEnum.genpage.name) {
     final name = argResults.command![OptionEnum.name.name] as String?;
     final addArgs = argResults.command![FlagEnum.args.name] as bool;
     // Check if name is null or empty
     if (name == null || name.trim().isEmpty) {
       print(
-          '\x1B[31mError: Page name is required.\nUsage: ajmancli ${CommandEnum.genpage.name} -n <PageName>\x1B[0m');
+        '\x1B[31mError: Page name is required.\nUsage: ajmancli ${CommandEnum.genpage.name} -n <PageName>\x1B[0m',
+      );
       exit(1);
     }
 
@@ -71,13 +89,14 @@ void main(List<String> arguments) {
     final invalidNamePattern = RegExp(r'[^a-zA-Z0-9]');
     if (invalidNamePattern.hasMatch(name) || name.contains(' ')) {
       print(
-          '\x1B[31mError: Page name can only contain alphanumeric characters (letters and numbers) and no spaces.\x1B[0m');
+        '\x1B[31mError: Page name can only contain alphanumeric characters (letters and numbers) and no spaces.\x1B[0m',
+      );
       exit(1);
     }
 
     // If validation passes, call generatePage
     generatePage(name, addArgs);
-  } else if (argResults.command!.name == CommandEnum.addintl.name) {
+  } else if (argResults.command?.name == CommandEnum.addintl.name) {
     final value = argResults.command![OptionEnum.value.name] as String?;
     final arabic = argResults.command![OptionEnum.arabic.name] as String?;
     if (value == null) {
@@ -86,7 +105,7 @@ void main(List<String> arguments) {
     }
     addStringToArbFiles(value, arabic);
   } else {
-    print('Unknown command. Use --help for usage information.');
+    print(parser.usage);
     exit(1);
   }
 }

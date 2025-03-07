@@ -1,2 +1,5 @@
-A sample command-line application with an entrypoint in `bin/`, library code
-in `lib/`, and example unit test in `test/`.
+## **Activate/Deactivate package locally :**
+
+``` dart pub global activate --source path . ```
+``` dart pub global deactivate ajman ```
+

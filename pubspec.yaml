@@ -2,7 +2,7 @@ name: ajmancli
 description: Internal code gen tool for Ajman bank project.
 homepage: https://github.com/saffer4u/ajman_cli
 repository: https://github.com/saffer4u/ajman_cli
-version: 1.0.1
+version: 1.0.2
 # repository: https://github.com/my_org/my_repo
 environment:
   sdk: ^3.1.5
@@ -10,9 +10,10 @@ environment:
 # Add regular dependencies here.
 dependencies:
   args: ^2.5.0
+  pubspec_parse: ^1.5.0
 # path: ^1.8.0
 dev_dependencies:
-  lints: ^4.0.0
+  lints: ^5.1.1
   test: ^1.24.0
 
 executables:
