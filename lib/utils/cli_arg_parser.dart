@@ -35,6 +35,8 @@ abstract class CliArgParser {
         ),
     );
 
+    parser.addCommand(CommandEnum.build.name);
+
     parser.addFlag(
       FlagEnum.help.name,
       abbr: FlagEnum.help.name[0],

@@ -1,5 +1,5 @@
 name: ajmancli
-description: Internal code gen tool for Ajman bank project.
+description: A CLI tool for internal code generation in the Ajman Bank project, designed to streamline development and boost productivity.
 homepage: https://github.com/saffer4u/ajman_cli
 repository: https://github.com/saffer4u/ajman_cli
 version: 1.0.2

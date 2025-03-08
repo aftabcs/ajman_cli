@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:ajmancli/add_intl/add_intl.dart';
+import 'package:ajmancli/build/build.dart';
 import 'package:ajmancli/constants/enums/command_enum.dart';
 import 'package:ajmancli/constants/enums/flag_enum.dart';
 import 'package:ajmancli/constants/enums/option_enum.dart';
@@ -9,7 +10,7 @@ import 'package:ajmancli/utils/common_utils.dart';
 
 import 'package:args/args.dart';
 
-void main(List<String> arguments) {
+void main(List<String> arguments) async {
   ArgResults? argResults = CliArgParser.parse(arguments);
 
   if (argResults?[FlagEnum.version.name] as bool) {
@@ -20,6 +21,7 @@ void main(List<String> arguments) {
   if (argResults?[FlagEnum.help.name] as bool) {
     print('Usage: ajman ${CommandEnum.genpage.name} -n <PageName> [-a <AddArgs>]');
     print('Usage: ajman ${CommandEnum.addintl.name} -v <Value String> [-a <ArabicString>]');
+    print('Usage: ajman ${CommandEnum.build.name} <environment>');
     print(CliArgParser.parser.usage);
     exit(0);
   }
@@ -54,6 +56,16 @@ void main(List<String> arguments) {
       exit(1);
     }
     addStringToArbFiles(value, arabic);
+  } else if (argResults?.command?.name == CommandEnum.build.name) {
+    // Handle the build command
+    if (argResults!.command!.rest.length != 1) {
+      print('\x1B[31mError: build command requires exactly one argument: <environment>\x1B[0m');
+      print('Example: ajman build dev');
+      exit(1);
+    }
+    String environment = argResults.command!.rest[0];
+    // buildApkWithMakeFile(environment);
+    buildApkWithProcess(environment);
   } else {
     print(CliArgParser.parser.usage);
     exit(1);
