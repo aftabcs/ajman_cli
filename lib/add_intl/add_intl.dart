@@ -9,7 +9,7 @@ void addStringToArbFiles(String value, String? arabic) {
 
   // Ensure the command is run from the root directory (ajman_flutter)
   if (!currentDirectory.endsWith('ajman_flutter')) {
-    print('This command must be run in the "ajman_flutter" folder.');
+    print('This command must be run in the root folder (ajman_flutter)');
     return;
   }
 

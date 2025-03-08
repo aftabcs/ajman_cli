@@ -57,10 +57,26 @@ class ${className}Args {
   ${className}Args();
 }
 
+// -------------------------------------------------------------------------- //
 
+// DI
 var ${TextUtils.toLowerCaseFirstLetter(className)}ViewModelProvider =
     ChangeNotifierProvider.autoDispose<${className}ViewModel>(
         (ref) => ${className}ViewModel());
+/*
+
+RoutePaths ->
+static const String ${TextUtils.toLowerCaseFirstLetter(className)} = "${TextUtils.toLowerCaseFirstLetter(className)}";
+
+AppRouter ->
+case RoutePaths.${TextUtils.toLowerCaseFirstLetter(className)}:
+        return CupertinoPageRoute(
+          builder: (context) => $className(args: settings.arguments as ${className}Args?),
+          settings: const RouteSettings(name: RoutePaths.${TextUtils.toLowerCaseFirstLetter(className)}),
+        );
+
+*/
+
 
 '''
       : '''
@@ -110,10 +126,25 @@ class ${className}State extends BaseStatefulPage<${className}ViewModel, $classNa
   ProviderBase provideBase() => ${TextUtils.toLowerCaseFirstLetter(className)}ViewModelProvider;
 }
 
+// -------------------------------------------------------------------------- //
 
+// DI
 var ${TextUtils.toLowerCaseFirstLetter(className)}ViewModelProvider =
     ChangeNotifierProvider.autoDispose<${className}ViewModel>(
         (ref) => ${className}ViewModel());
 
+/*
+
+RoutePaths ->
+static const String ${TextUtils.toLowerCaseFirstLetter(className)} = "${TextUtils.toLowerCaseFirstLetter(className)}";
+
+AppRouter ->
+case RoutePaths.${TextUtils.toLowerCaseFirstLetter(className)}:
+        return CupertinoPageRoute(
+          builder: (context) => $className(),
+          settings: const RouteSettings(name: RoutePaths.${TextUtils.toLowerCaseFirstLetter(className)}),
+        );
+
+*/
 ''';
 }

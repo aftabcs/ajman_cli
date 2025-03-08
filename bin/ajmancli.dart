@@ -68,8 +68,8 @@ void main(List<String> arguments) {
   }
 
   if (argResults[FlagEnum.help.name] as bool) {
-    print('Usage: ajmancli ${CommandEnum.genpage.name} -n <PageName> [-a <AddArgs>]');
-    print('Usage: ajmancli ${CommandEnum.addintl.name} -v <Value String> [-a <ArabicString>]');
+    print('Usage: ajman ${CommandEnum.genpage.name} -n <PageName> [-a <AddArgs>]');
+    print('Usage: ajman ${CommandEnum.addintl.name} -v <Value String> [-a <ArabicString>]');
     print(parser.usage);
     exit(0);
   }
@@ -80,7 +80,7 @@ void main(List<String> arguments) {
     // Check if name is null or empty
     if (name == null || name.trim().isEmpty) {
       print(
-        '\x1B[31mError: Page name is required.\nUsage: ajmancli ${CommandEnum.genpage.name} -n <PageName>\x1B[0m',
+        '\x1B[31mError: Page name is required.\nUsage: ajman ${CommandEnum.genpage.name} -n <PageName> [-a <AddArgs>]\x1B[0m',
       );
       exit(1);
     }
@@ -100,7 +100,7 @@ void main(List<String> arguments) {
     final value = argResults.command![OptionEnum.value.name] as String?;
     final arabic = argResults.command![OptionEnum.arabic.name] as String?;
     if (value == null) {
-      print('Error: Value is required.\nUsage: ajmancli addintl -v <String> [-a <ArabicString>]');
+      print('Error: Value is required.\nUsage: ajman addintl -v <String> [-a <ArabicString>]');
       exit(1);
     }
     addStringToArbFiles(value, arabic);

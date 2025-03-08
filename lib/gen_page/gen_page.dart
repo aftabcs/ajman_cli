@@ -31,8 +31,9 @@ void generatePage(String name, bool addArgs) {
   });
 
   print('✅ Files generated successfully in ${folder.path}');
-  addToRoutePaths(name);
+  // addToRoutePaths(name);
 }
+/*
 
 const String routePathsFile = 'lib/main/navigation/route_paths.dart';
 void addToRoutePaths(String pageName) {
@@ -72,3 +73,4 @@ String _toCamelCase(String input) {
 
   return firstWord + remainingWords;
 }
+*/
