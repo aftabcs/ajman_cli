@@ -8,6 +8,7 @@ import 'package:args/args.dart';
 abstract class CliArgParser {
   static final parser = ArgParser();
   static ArgResults? parse(List<String> arguments) {
+    //! Generate Page
     parser.addCommand(
       CommandEnum.genpage.name,
       ArgParser()
@@ -17,6 +18,28 @@ abstract class CliArgParser {
           abbr: 'a', // Short abbreviation
           defaultsTo: false, // Default value
           help: 'Use to generate args',
+        ),
+    );
+    //! Add api
+    parser.addCommand(
+      CommandEnum.addapi.name,
+      ArgParser()
+        ..addOption(OptionEnum.name.name, abbr: OptionEnum.name.name[0], help: 'Name of the api to generate')
+        ..addOption(
+          OptionEnum.feature.name,
+          abbr: OptionEnum.feature.name[0],
+          help: 'Name of the feature/folder where files will be generated',
+        )
+        ..addOption(
+          OptionEnum.list.name,
+          abbr: OptionEnum.list.name[0],
+          help: 'Optional name of the list model to generate',
+        )
+        ..addFlag(
+          FlagEnum.request.name, // Optional boolean flag
+          abbr: 'r', // Short abbreviation
+          defaultsTo: false, // Default value
+          help: 'Use to generate request entity',
         ),
     );
 

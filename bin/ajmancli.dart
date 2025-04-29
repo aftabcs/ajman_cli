@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:ajmancli/add_intl/add_intl.dart';
+import 'package:ajmancli/app_api/add_api.dart';
 import 'package:ajmancli/build/build.dart';
 import 'package:ajmancli/constants/enums/command_enum.dart';
 import 'package:ajmancli/constants/enums/flag_enum.dart';
@@ -66,6 +67,42 @@ void main(List<String> arguments) async {
     String environment = argResults.command!.rest[0];
     // buildApkWithMakeFile(environment);
     buildApkWithProcess(environment);
+  } else if (argResults?.command?.name == CommandEnum.addapi.name) {
+    final String uses =
+        "Usage: ajman ${CommandEnum.addapi.name} -n <ApiName> -f <FeatureName> [-l <ListObjectName>] [-a]";
+    final String? name = argResults?.command![OptionEnum.name.name] as String?;
+    final String? feature = argResults?.command![OptionEnum.feature.name] as String?;
+    final String? list = argResults?.command![OptionEnum.list.name] as String?;
+    final bool genReqEnt = argResults?.command![FlagEnum.request.name] as bool? ?? false;
+
+    //? Check if name is null or empty
+    if (name == null || name.trim().isEmpty) {
+      print('\x1B[31mError: API name is required.\n$uses\x1B[0m');
+      exit(1);
+    }
+    //? Check if feature is null or empty
+    if (feature == null || feature.trim().isEmpty) {
+      print('\x1B[31mError: Feature name is required.\n$uses\x1B[0m');
+      exit(1);
+    }
+
+    //? Ensure the command is run from the root directory (ajman_flutter)
+    final currentDirectory = Directory.current.path;
+    if (!currentDirectory.endsWith('ajman_flutter')) {
+      print('This command must be run in the root folder (ajman_flutter)');
+      return;
+    }
+
+    //? Regular expression to validate the name (alphanumeric only, no spaces)
+    final invalidNamePattern = RegExp(r'[^a-zA-Z0-9]');
+    if (invalidNamePattern.hasMatch(name) || name.contains(' ')) {
+      print(
+        '\x1B[31mError: API name can only contain alphanumeric characters (letters and numbers) and no spaces.\x1B[0m',
+      );
+      exit(1);
+    }
+
+    addApi(name, feature, list, genReqEnt);
   } else {
     print(CliArgParser.parser.usage);
     exit(1);

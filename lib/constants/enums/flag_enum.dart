@@ -1,1 +1,1 @@
-enum FlagEnum { help, args, version }
+enum FlagEnum { help, args, version, request }

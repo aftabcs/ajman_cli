@@ -1,5 +1,1 @@
-enum OptionEnum {
-  name,
-  value,
-  arabic,
-}
+enum OptionEnum { name, feature, list, value, arabic }
