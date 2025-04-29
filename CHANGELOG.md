@@ -11,3 +11,8 @@
 - Bug fixes and performance improvements.
 - Added `build` command.
 - Code optimization.
+
+## 1.0.3
+
+- Added `addApi` command.
+- Code optimization.
