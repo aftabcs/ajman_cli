@@ -68,6 +68,17 @@ ajman build dev
 **Requirements:**
 - The `environment` argument is required and should be one of the predefined environments (e.g., `dev`, `staging`, `prod`).
 
+### 4. Generate APIs
+This command is used to generate models and entity of an APIs
+**Usage:**
+```sh
+ajmancli addapi -n <ApiName> -f <feature_name> -l [Optional]<ListOfOjectsInContent> -r [Optional]<Generate request entity>
+```
+**Example:**
+```sh
+ajman addapi -n RegisterUser -f user_registration -l Accounts -r 
+```
+
 ## Additional Flags
 
 ### Version

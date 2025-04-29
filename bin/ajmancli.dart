@@ -69,7 +69,7 @@ void main(List<String> arguments) async {
     buildApkWithProcess(environment);
   } else if (argResults?.command?.name == CommandEnum.addapi.name) {
     final String uses =
-        "Usage: ajman ${CommandEnum.addapi.name} -n <ApiName> -f <FeatureName> [-l <ListObjectName>] [-a]";
+        "Usage: ajman ${CommandEnum.addapi.name} -n <ApiName> -f <FeatureName> [-l <ListObjectName>] [-r]";
     final String? name = argResults?.command![OptionEnum.name.name] as String?;
     final String? feature = argResults?.command![OptionEnum.feature.name] as String?;
     final String? list = argResults?.command![OptionEnum.list.name] as String?;
